@@ -1,7 +1,38 @@
 import React, { useState } from 'react';
-// IMPORT NATIN ANG MGA ASSETS
+// IMPORT NG MGA MAIN ASSETS
 import logoImg from './assets/Image/logo.png'; 
-import bannerImg from './assets/Image/banner.png'; // Banner para sa McSavers
+import bannerImg from './assets/Image/banner.png'; 
+
+// IMPORT NG MGA PRODUCT IMAGES (Kailangan ito para sa Vercel deployment)
+// Siguraduhin na tama ang filename (case-sensitive ang Vercel!)
+import bigMac from './assets/Image/Burger/Big Mac.png';
+import burgerMcDo from './assets/Image/Burger/Burger McDo.png';
+import cheeseburger from './assets/Image/Burger/Cheeseburger.png';
+import doubleCheeseburger from './assets/Image/Burger/Double Cheeseburger.png';
+import mcChicken from './assets/Image/Burger/McChicken Sandwich.png';
+import mcCrispy from './assets/Image/Burger/McCrispy Chicken Sandwich.png';
+import quarterPounder from './assets/Image/Burger/Quarter Pounder with Cheese.png';
+
+import coke from './assets/Image/Drinks/Coke.png';
+import cokeZero from './assets/Image/Drinks/Coke Zero.png';
+import cokeFloat from './assets/Image/Drinks/Coke McFloat.png';
+import orangeJuice from './assets/Image/Drinks/Orange Juice.png';
+import coffee from './assets/Image/Drinks/McCafé Premium Roast Coffee.png';
+
+import applePie from './assets/Image/Drinks/Apple Pie.png';
+import caramelSundae from './assets/Image/Drinks/Hot Caramel Sundae.png';
+import fudgeSundae from './assets/Image/Drinks/Hot Fudge Sundae.png';
+import oreoFlurry from './assets/Image/Drinks/McFlurry with Oreo Cookies.png';
+import vanillaCone from './assets/Image/Drinks/Vanilla Sundae Cone.png';
+
+import chickenSpag from './assets/Image/Chicken/1pc. Chicken McDo with McSpaghetti.png';
+import chickenRice from './assets/Image/Chicken/1pc. Chicken McDo with Rice.png';
+import chickenRice2pc from './assets/Image/Chicken/2pc. Chicken McDo with Rice.png';
+import nuggetsFries from './assets/Image/Chicken/6pc. Chicken McNuggets with Fries.png';
+import filletRice from './assets/Image/Chicken/Crispy Chicken Fillet with Rice.png';
+
+import smokeyMelt from './assets/Image/Sale/NEW Smokey Melt Chicken Sandwich.png';
+import mcShakerFries from './assets/Image/Sale/Regular McShaker Fries .png';
 
 const FoodIcons = {
   All: () => (
@@ -56,32 +87,30 @@ const App = () => {
   const [orderDetails, setOrderDetails] = useState({ table: 0, id: '', date: '' });
 
   const products = [
-    { id: 1, name: 'Classic Beef Burger', price: 215, category: 'Burgers', img: '/src/assets/Image/Burger/Big Mac.png' },
-    { id: 2, name: 'Burger Beef Special', price: 55, category: 'Burgers', img: '/src/assets/Image/Burger/Burger McDo.png' },
-    { id: 3, name: 'Cheese Explosion', price: 79, category: 'Burgers', img: '/src/assets/Image/Burger/Cheeseburger.png' },
-    { id: 4, name: 'Double Stacked', price: 145, category: 'Burgers', img: '/src/assets/Image/Burger/Double Cheeseburger.png' },
-    { id: 5, name: 'Crispy Chicken Sandwich', price: 165, category: 'Burgers', img: '/src/assets/Image/Burger/McChicken Sandwich.png' },
-    { id: 6, name: 'Zesty Crispy Fillet', price: 185, category: 'Burgers', img: '/src/assets/Image/Burger/McCrispy Chicken Sandwich.png' },
-    { id: 7, name: 'Quarter Master', price: 205, category: 'Burgers', img: '/src/assets/Image/Burger/Quarter Pounder with Cheese.png' },
-    { id: 9, name: 'Coke', price: 55, category: 'Drinks', img: '/src/assets/Image/Drinks/Coke.png' },
-    { id: 10, name: 'Coke Zero', price: 55, category: 'Drinks', img: '/src/assets/Image/Drinks/Coke Zero.png' },
-    { id: 11, name: 'Coke Float', price: 75, category: 'Drinks', img: '/src/assets/Image/Drinks/Coke McFloat.png' },
-    { id: 12, name: 'Orange Juice', price: 65, category: 'Drinks', img: '/src/assets/Image/Drinks/Orange Juice.png' },
-    { id: 13, name: 'Premium Roast Coffee', price: 50, category: 'Drinks', img: '/src/assets/Image/Drinks/McCafé Premium Roast Coffee.png' },
-    { id: 14, name: 'Apple Pie', price: 45, category: 'Sweets', img: '/src/assets/Image/Drinks/Apple Pie.png' },
-    { id: 15, name: 'Hot Caramel Sundae', price: 59, category: 'Sweets', img: '/src/assets/Image/Drinks/Hot Caramel Sundae.png' },
-    { id: 16, name: 'Hot Fudge Sundae', price: 59, category: 'Sweets', img: '/src/assets/Image/Drinks/Hot Fudge Sundae.png' },
-    { id: 17, name: 'Creamy Oreo Flurry', price: 69, category: 'Sweets', img: '/src/assets/Image/Drinks/McFlurry with Oreo Cookies.png' },
-    { id: 18, name: 'Vanilla Sundae Cone', price: 20, category: 'Sweets', img: '/src/assets/Image/Drinks/Vanilla Sundae Cone.png' },
-    { id: 19, name: 'Chicken with Spaghetti', price: 155, category: 'Platters', img: '/src/assets/Image/Chicken/1pc. Chicken McDo with McSpaghetti.png' },
-    { id: 20, name: 'Chicken with Rice', price: 125, category: 'Platters', img: '/src/assets/Image/Chicken/1pc. Chicken McDo with Rice.png' },
-    { id: 21, name: '2pc. Chicken with Rice', price: 195, category: 'Platters', img: '/src/assets/Image/Chicken/2pc. Chicken McDo with Rice.png' },
-    { id: 22, name: '6pc. Nuggets with Fries', price: 150, category: 'Platters', img: '/src/assets/Image/Chicken/6pc. Chicken McNuggets with Fries.png' },
-    { id: 23, name: 'Crispy Fillet with Rice', price: 99, category: 'Platters', img: '/src/assets/Image/Chicken/Crispy Chicken Fillet with Rice.png' },
-    
-    // MCSAVERS ITEMS - UPDATED PRICES
-    { id: 24, name: 'Smokey Melt Chicken Sandwich', price: 59, category: 'McSavers', img: '/src/assets/Image/Sale/NEW Smokey Melt Chicken Sandwich.png' },
-    { id: 25, name: 'Regular McShaker Fries', price: 59, category: 'McSavers', img: '/src/assets/Image/Sale/Regular McShaker Fries .png' },
+    { id: 1, name: 'Classic Beef Burger', price: 215, category: 'Burgers', img: bigMac },
+    { id: 2, name: 'Burger Beef Special', price: 55, category: 'Burgers', img: burgerMcDo },
+    { id: 3, name: 'Cheese Explosion', price: 79, category: 'Burgers', img: cheeseburger },
+    { id: 4, name: 'Double Stacked', price: 145, category: 'Burgers', img: doubleCheeseburger },
+    { id: 5, name: 'Crispy Chicken Sandwich', price: 165, category: 'Burgers', img: mcChicken },
+    { id: 6, name: 'Zesty Crispy Fillet', price: 185, category: 'Burgers', img: mcCrispy },
+    { id: 7, name: 'Quarter Master', price: 205, category: 'Burgers', img: quarterPounder },
+    { id: 9, name: 'Coke', price: 55, category: 'Drinks', img: coke },
+    { id: 10, name: 'Coke Zero', price: 55, category: 'Drinks', img: cokeZero },
+    { id: 11, name: 'Coke Float', price: 75, category: 'Drinks', img: cokeFloat },
+    { id: 12, name: 'Orange Juice', price: 65, category: 'Drinks', img: orangeJuice },
+    { id: 13, name: 'Premium Roast Coffee', price: 50, category: 'Drinks', img: coffee },
+    { id: 14, name: 'Apple Pie', price: 45, category: 'Sweets', img: applePie },
+    { id: 15, name: 'Hot Caramel Sundae', price: 59, category: 'Sweets', img: caramelSundae },
+    { id: 16, name: 'Hot Fudge Sundae', price: 59, category: 'Sweets', img: fudgeSundae },
+    { id: 17, name: 'Creamy Oreo Flurry', price: 69, category: 'Sweets', img: oreoFlurry },
+    { id: 18, name: 'Vanilla Sundae Cone', price: 20, category: 'Sweets', img: vanillaCone },
+    { id: 19, name: 'Chicken with Spaghetti', price: 155, category: 'Platters', img: chickenSpag },
+    { id: 20, name: 'Chicken with Rice', price: 125, category: 'Platters', img: chickenRice },
+    { id: 21, name: '2pc. Chicken with Rice', price: 195, category: 'Platters', img: chickenRice2pc },
+    { id: 22, name: '6pc. Nuggets with Fries', price: 150, category: 'Platters', img: nuggetsFries },
+    { id: 23, name: 'Crispy Fillet with Rice', price: 99, category: 'Platters', img: filletRice },
+    { id: 24, name: 'Smokey Melt Chicken Sandwich', price: 59, category: 'McSavers', img: smokeyMelt },
+    { id: 25, name: 'Regular McShaker Fries', price: 59, category: 'McSavers', img: mcShakerFries },
   ];
 
   const categories = [
@@ -119,12 +148,7 @@ const App = () => {
       <aside className="fixed bottom-0 w-full h-24 bg-white/90 backdrop-blur-md border-t border-slate-200 flex flex-row items-center justify-around px-4 z-50 sm:relative sm:w-56 sm:h-full sm:flex-col sm:border-t-0 sm:border-r sm:justify-start sm:py-10 sm:gap-4 overflow-y-auto custom-scrollbar">
         <div className="hidden sm:block mb-6 transform hover:scale-110 transition-transform duration-500 cursor-pointer">
           <div className="w-32 h-32 rounded-[2.5rem] shadow-2xl border-4 border-white bg-white flex items-center justify-center overflow-hidden">
-            <img 
-              src={logoImg} 
-              alt="Logo" 
-              className="w-full h-full object-contain p-6" 
-              onError={(e) => { e.target.src = "https://via.placeholder.com/150?text=Logo"; }} 
-            />
+            <img src={logoImg} alt="Logo" className="w-full h-full object-contain p-6" />
           </div>
         </div>
         
@@ -133,9 +157,7 @@ const App = () => {
             key={cat.name}
             onClick={() => setCategory(cat.name)}
             className={`flex flex-col items-center justify-center min-w-[70px] h-20 sm:w-40 sm:min-h-[120px] rounded-[2.5rem] transition-all duration-500 relative group ${
-              category === cat.name 
-              ? 'bg-red-600 text-white shadow-xl scale-105' 
-              : 'bg-white text-slate-400 hover:text-red-500'
+              category === cat.name ? 'bg-red-600 text-white shadow-xl scale-105' : 'bg-white text-slate-400 hover:text-red-500'
             }`}
           >
             <div className="mb-2 transform group-hover:rotate-12 transition-transform duration-300">
@@ -163,17 +185,11 @@ const App = () => {
           {category === 'McSavers' && (
             <div className="w-full mb-10 animate-in fade-in slide-in-from-top-4 duration-700">
               <div className="rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white">
-                <img 
-                  src={bannerImg} 
-                  alt="McSavers Promo" 
-                  className="w-full h-auto object-cover max-h-64"
-                  onError={(e) => { e.target.style.display = 'none'; }} 
-                />
+                <img src={bannerImg} alt="McSavers Promo" className="w-full h-auto object-cover max-h-64" />
               </div>
             </div>
           )}
 
-          {/* GRID CONFIGURATION: Kapag McSavers, mas malapad ang columns */}
           <div className={`grid gap-8 pb-52 ${category === 'McSavers' ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3'}`}>
             {products
               .filter(p => category === 'All' || p.category === category)
@@ -182,16 +198,11 @@ const App = () => {
                   key={product.id}
                   className={`bg-white p-5 rounded-[3.5rem] shadow-sm hover:shadow-2xl transition-all duration-700 group relative border border-slate-100 flex ${product.category === 'McSavers' ? 'flex-row gap-6 items-center min-h-[220px]' : 'flex-col'}`}
                 >
-                  {/* Image Container */}
                   <div className={`bg-slate-50 rounded-[3rem] overflow-hidden flex items-center justify-center shrink-0 ${product.category === 'McSavers' ? 'w-1/2 h-40' : 'h-52 sm:h-64 mb-6'}`}>
-                    <img 
-                      src={product.img} 
-                      alt={product.name} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
-                    />
+                    <img src={product.img} alt={product.name} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   </div>
                   
-                  {/* Content Container */}
                   <div className={`px-3 flex-1 flex flex-col justify-between ${product.category === 'McSavers' ? 'h-40' : ''}`}>
                     <div>
                       <h3 className={`font-black text-slate-800 tracking-tight leading-tight mb-2 ${product.category === 'McSavers' ? 'text-xl' : 'text-lg sm:text-xl'}`}>
@@ -207,10 +218,7 @@ const App = () => {
                           <span className="text-red-600 font-black text-2xl italic">₱{product.price}</span>
                           <div className="w-12 h-12 bg-slate-900 rounded-2xl text-white flex items-center justify-center text-2xl font-bold">+</div>
                       </div>
-                      <button 
-                          onClick={() => addToCart(product)}
-                          className="absolute inset-0 bg-red-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] translate-y-16 group-hover:translate-y-0 transition-all duration-500 flex items-center justify-center shadow-lg"
-                      >
+                      <button onClick={() => addToCart(product)} className="absolute inset-0 bg-red-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] translate-y-16 group-hover:translate-y-0 transition-all duration-500 flex items-center justify-center shadow-lg">
                           Add to Tray
                       </button>
                     </div>
@@ -253,7 +261,7 @@ const App = () => {
             <div className="p-10">
                 <div className="text-center border-b border-slate-100 pb-8 mb-8">
                     <div className="w-24 h-24 mx-auto rounded-3xl mb-4 shadow-lg border-2 border-slate-50 bg-white flex items-center justify-center overflow-hidden">
-                      <img src={logoImg} alt="Logo" className="w-full h-full object-contain p-4" onError={(e) => { e.target.src = "https://via.placeholder.com/150?text=Logo"; }}/>
+                      <img src={logoImg} alt="Logo" className="w-full h-full object-contain p-4" />
                     </div>
                     <h2 className="text-2xl font-black tracking-tighter uppercase text-slate-900">Order Placed</h2>
                     <p className="text-slate-400 text-[10px] font-bold tracking-widest uppercase mt-2">{orderDetails.id}</p>
