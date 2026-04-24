@@ -79,7 +79,7 @@ const FoodIcons = {
 
 const App = () => {
   const [cart, setCart] = useState([]);
-  const [category, setCategory] = useState(null); // Default null para sa Category Selection
+  const [category, setCategory] = useState(null);
   const [showReceipt, setShowReceipt] = useState(false);
   const [orderDetails, setOrderDetails] = useState({ table: 0, id: '', date: '' });
   const [activeProductId, setActiveProductId] = useState(null);
@@ -122,7 +122,7 @@ const App = () => {
 
   const addToCart = (product) => {
     setCart([...cart, { ...product, cartId: Date.now() }]);
-    setActiveProductId(null);
+    // Hindi natin i-reset ang activeProductId dito para manatiling naka-show ang button
   };
 
   const total = cart.reduce((sum, item) => sum + item.price, 0);
@@ -138,21 +138,20 @@ const App = () => {
   const resetAll = () => {
     setCart([]);
     setShowReceipt(false);
-    setCategory(null); // Balik sa Home pagkatapos mag-order
+    setCategory(null);
+    setActiveProductId(null);
   };
 
   return (
     <div className="flex h-screen bg-[#f8fafc] font-sans overflow-hidden text-slate-800 w-full max-w-7xl mx-auto relative sm:border-x border-slate-200">
       
-      {/* MAIN VIEWPORT */}
       <div className="flex-1 flex flex-col min-w-0 bg-white">
         
-        {/* HEADER */}
         <header className="p-8 flex justify-between items-center border-b border-slate-100">
           <div className="flex items-center gap-4">
             {category && (
               <button 
-                onClick={() => setCategory(null)}
+                onClick={() => {setCategory(null); setActiveProductId(null);}}
                 className="w-12 h-12 flex items-center justify-center bg-slate-100 rounded-full hover:bg-red-50 transition-colors"
               >
                 <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -171,8 +170,6 @@ const App = () => {
         </header>
 
         <main className="flex-1 overflow-y-auto custom-scrollbar p-6 sm:p-10">
-          
-          {/* CATEGORY GRID SELECTION (LALABAS LANG PAG NULL ANG CATEGORY) */}
           {!category ? (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 animate-in fade-in zoom-in duration-500">
               {categories.map((cat) => (
@@ -194,80 +191,75 @@ const App = () => {
               ))}
             </div>
           ) : (
-            /* PRODUCT LIST VIEW (LALABAS LANG PAG MAY PINILING CATEGORY) */
-            <>
-              {category === 'McSavers' && (
-                <div className="w-full mb-10 animate-in slide-in-from-top-4 duration-700">
-                  <div className="rounded-[3rem] overflow-hidden shadow-xl">
-                    <img src={bannerImg} alt="Promo" className="w-full h-auto object-cover max-h-60" />
-                  </div>
-                </div>
-              )}
-
-              <div className={`grid gap-8 pb-40 ${category === 'McSavers' ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3'}`}>
-                {products
-                  .filter(p => category === 'All' || p.category === category)
-                  .map((product) => {
-                    const isActive = activeProductId === product.id;
-                    return (
-                      <div 
-                        key={product.id}
-                        onClick={() => setActiveProductId(isActive ? null : product.id)}
-                        className="bg-white p-6 rounded-[3.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 group relative border border-slate-100 flex flex-col cursor-pointer"
-                      >
-                        <div className="bg-slate-50 rounded-[2.5rem] overflow-hidden flex items-center justify-center shrink-0 h-48 sm:h-56 mb-6">
-                          <img src={product.img} alt={product.name} 
-                          className={`w-full h-full object-contain p-4 transition-transform duration-700 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`} />
+            <div className={`grid gap-8 pb-52 ${category === 'McSavers' ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1 xs:grid-cols-2 lg:grid-cols-3'}`}>
+              {products
+                .filter(p => category === 'All' || p.category === category)
+                .map((product) => {
+                  const isActive = activeProductId === product.id;
+                  return (
+                    <div 
+                      key={product.id}
+                      className="bg-white p-6 rounded-[3.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 group relative border border-slate-100 flex flex-col"
+                    >
+                      <div className="bg-slate-50 rounded-[2.5rem] overflow-hidden flex items-center justify-center shrink-0 h-48 sm:h-56 mb-6">
+                        <img src={product.img} alt={product.name} 
+                        className={`w-full h-full object-contain p-4 transition-transform duration-700 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`} />
+                      </div>
+                      
+                      <div className="flex-1 flex flex-col justify-between">
+                        <div>
+                          <h3 className="font-black text-slate-800 text-lg leading-tight mb-2 uppercase">{product.name}</h3>
+                          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-4">{product.category}</p>
                         </div>
                         
-                        <div className="flex-1 flex flex-col justify-between">
-                          <div>
-                            <h3 className="font-black text-slate-800 text-lg leading-tight mb-2 uppercase">{product.name}</h3>
-                            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-4">
-                              {product.category}
-                            </p>
+                        <div className="flex justify-between items-center h-14 relative overflow-hidden">
+                          <div className={`flex justify-between items-center w-full transition-all duration-500 ${isActive ? 'translate-y-16 opacity-0' : 'translate-y-0 opacity-100'}`}>
+                              <span className="text-red-600 font-black text-2xl italic">₱{product.price}</span>
+                              <button 
+                                onClick={() => setActiveProductId(product.id)}
+                                className="w-12 h-12 bg-slate-900 rounded-2xl text-white flex items-center justify-center text-2xl font-bold hover:bg-red-600 transition-colors"
+                              >
+                                +
+                              </button>
                           </div>
-                          
-                          <div className="flex justify-between items-center h-14 relative overflow-hidden">
-                            <div className={`flex justify-between items-center w-full transition-all duration-500 ${isActive ? 'translate-y-16' : 'group-hover:translate-y-16'}`}>
-                                <span className="text-red-600 font-black text-2xl italic">₱{product.price}</span>
-                                <div className="w-12 h-12 bg-slate-900 rounded-2xl text-white flex items-center justify-center text-2xl font-bold">+</div>
-                            </div>
-                            <button 
-                              onClick={(e) => { e.stopPropagation(); addToCart(product); }} 
-                              className={`absolute inset-0 bg-red-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 flex items-center justify-center shadow-lg ${isActive ? 'translate-y-0' : 'translate-y-16 group-hover:translate-y-0'}`}
-                            >
-                                Add to Tray
-                            </button>
-                          </div>
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); addToCart(product); }} 
+                            className={`absolute inset-0 bg-red-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 flex items-center justify-center shadow-lg ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0 pointer-events-none'}`}
+                          >
+                              Add to Tray
+                          </button>
                         </div>
                       </div>
-                    );
-                  })}
-              </div>
-            </>
+                    </div>
+                  );
+                })}
+            </div>
           )}
         </main>
 
-        {/* FLOATING CART SUMMARY (Lilitaw lang kapag may laman ang cart) */}
-        <section className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-4xl bg-slate-900 text-white rounded-[3rem] shadow-2xl transition-all duration-700 z-50 ${cart.length > 0 ? 'h-24 sm:h-32 opacity-100 translate-y-0' : 'h-0 opacity-0 translate-y-20 pointer-events-none'}`}>
-          <div className="h-full flex items-center justify-between px-8 sm:px-12">
-            <div className="flex items-center gap-6">
-              <div>
-                <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">Subtotal</p>
+        {/* FLOATING CART SUMMARY (Ibinalik ang +Badge at Thin Border) */}
+        <section className={`fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-4xl bg-slate-900 text-white rounded-[3.5rem] shadow-2xl transition-all duration-700 z-50 ${cart.length > 0 ? 'h-28 sm:h-36 opacity-100 translate-y-0' : 'h-0 opacity-0 translate-y-20 pointer-events-none'}`}>
+          <div className="h-full flex items-center justify-between px-8 sm:px-14">
+            <div className="flex items-center gap-6 overflow-hidden">
+              <div className="hidden lg:flex -space-x-4 items-center">
+                  {cart.slice(-4).map((item, i) => (
+                      <img key={i} src={item.img} 
+                      className="w-16 h-16 rounded-2xl border-2 border-slate-900 object-contain bg-white p-1" />
+                  ))}
+                  {cart.length > 4 && (
+                    <div className="w-14 h-14 rounded-2xl border-2 border-slate-900 bg-red-600 flex items-center justify-center font-black text-sm relative z-10">
+                      +{cart.length - 4}
+                    </div>
+                  )}
+              </div>
+              <div className="ml-2">
+                <p className="text-red-500 text-[10px] font-black uppercase tracking-widest">Grand Total</p>
                 <p className="text-2xl sm:text-4xl font-black italic text-yellow-400">₱{total.toFixed(2)}</p>
               </div>
-              <div className="hidden sm:flex -space-x-3">
-                {cart.slice(-3).map((item, i) => (
-                  <div key={i} className="w-12 h-12 rounded-xl bg-white border-2 border-slate-900 p-1">
-                    <img src={item.img} className="w-full h-full object-contain" />
-                  </div>
-                ))}
-              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <button onClick={() => setCart([])} className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-white transition-colors">Clear</button>
-              <button onClick={handleProceed} className="px-8 py-4 sm:py-5 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black text-xs sm:text-base uppercase tracking-widest active:scale-95 transition-all">Checkout</button>
+            <div className="flex items-center gap-6">
+              <button onClick={() => setCart([])} className="text-[10px] font-black text-slate-500 uppercase tracking-widest hover:text-white transition-colors">Clear</button>
+              <button onClick={handleProceed} className="px-8 sm:px-16 py-4 sm:py-6 bg-red-600 hover:bg-red-500 text-white rounded-2xl sm:rounded-[2rem] font-black text-xs sm:text-base uppercase tracking-[0.3em] active:scale-95 transition-all">Checkout</button>
             </div>
           </div>
         </section>
