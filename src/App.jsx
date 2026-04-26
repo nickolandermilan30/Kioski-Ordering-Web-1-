@@ -144,7 +144,8 @@ const App = () => {
                       : 'perspective(1000px) translateZ(0px)'
                   }}
                 >
-                  <img src={cat.img} alt={cat.name} className="w-full h-full object-contain mb-1 drop-shadow-md" />
+                  <img src={cat.img} alt={cat.name} 
+                  className="w-full h-full object-contain mb-1 drop-shadow-md" />
                   <span className="text-[8px] md:text-[10px] font-black uppercase text-gray-900 text-center leading-tight">{cat.name}</span>
                 </button>
               ))}
@@ -247,7 +248,8 @@ const App = () => {
                 {cart.map((item, i) => (
                   <div key={i} className="shrink-0 w-20 flex flex-col items-center bg-white p-2 rounded-xl border border-gray-100 shadow-sm relative">
                     <div className="absolute -top-1 -right-1 bg-yellow-400 text-black font-black text-[8px] w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm z-10">1</div>
-                    <img src={item.img} className="w-10 h-10 object-contain mb-1" alt={item.name} />
+                    <img src={item.img} 
+                    className="w-10 h-10 object-contain mb-1" alt={item.name} />
                     <span className="text-[7px] font-black text-gray-500 uppercase truncate w-full text-center">{item.name}</span>
                   </div>
                 ))}
